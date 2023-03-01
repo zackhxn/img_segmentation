@@ -132,6 +132,6 @@ def on_ui_tabs():
     json_input.click(None, None, [width, height], _js="loadJSON")
     json_output.click(None, None, None, _js="saveJSON")
 
-  return [(openpose_editor, "Image Sagmetation", "openpose_editor")]
+  return [(openpose_editor, "Image Sagmentation", "openpose_editor")]
 
 script_callbacks.on_ui_tabs(on_ui_tabs)
