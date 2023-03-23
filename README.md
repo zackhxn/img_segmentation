@@ -3,9 +3,10 @@
 ![image](https://github.com/zackhxn/img_segmentation/blob/main/images/1.png)
 ## 功能
 -  「Add body」：添加一个新骨骼
--  「edit img」：做图像分割
-
--  「Save PNG」: 保存做图像分割的图像
+-  「Add image」：添加一张图像
+-  「Img Segmentation」：对图片做图像分割
+-  「Add」：添加选择的图片
+-  「Save PNG」: 保存深度图像
 -  「Save Openpose」: 保存骨骼图像
 ## 安装方法
 
