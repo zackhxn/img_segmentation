@@ -172,10 +172,10 @@ def img_segmentation(file_path):
     image = cv2.imread(file_path)
 
     # 转换为灰度图像
-    gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+    # gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 
     # 应用边缘检测算法
-    canny = cv2.Canny(gray, 30, 150)
+    canny = cv2.Canny(image, 30, 150)
 
     # 执行形态学操作，以便提取主体
     kernel = np.ones((5, 5), np.uint8)
@@ -203,8 +203,8 @@ def img_segmentation(file_path):
     mask[(mask == (0, 255, 255)).all(axis=2)] = (0, 0, 0)
     # 将掩模与原图像相乘
     result = cv2.bitwise_and(image, mask)
-    last_slash_idx = file_path.rfind("/")
-    filename = file_path[last_slash_idx + 1:]
+    # last_slash_idx = file_path.rfind("/")
+    # filename = file_path[last_slash_idx + 1:]
     last_point_idx = file_path.rfind(".")
     filename = file_path[:last_point_idx - 1]
     print(filename)

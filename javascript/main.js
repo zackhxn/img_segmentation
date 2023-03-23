@@ -57,7 +57,22 @@ let openpose_obj = {
 }
 
 const default_keypoints = [[241,77],[241,120],[191,118],[177,183],[163,252],[298,118],[317,182],[332,245],[225,241],[213,359],[215,454],[270,240],[282,360],[286,456],[232,59],[253,60],[225,70],[260,72]]
+function addImg(path){
 
+
+    //alert(path);
+
+	fabric.Image.fromURL(path, function(oImg) {
+	    const canvas = openpose_editor_canvas;
+		canvas.add(oImg);
+		canvas.discardActiveObject();
+		canvas.setActiveObject(oImg);
+        oImg.set({
+            opacity: depth_addOpacity
+        });
+	});
+	canvas.requestRenderAll();
+}
 function gradioApp() {
     const elems = document.getElementsByTagName('gradio-app')
     const gradioShadowRoot = elems.length == 0 ? null : elems[0].shadowRoot
@@ -476,46 +491,54 @@ function loadJSON(){
     })
     input.click()
 }
-
-function addBackground(){
-    const input = document.createElement("input");
-    input.type = "file"
-    input.accept = "image/*"
-    input.addEventListener("change", function(e){
-        const canvas = openpose_editor_canvas
-        const file = e.target.files[0];
-		var fileReader = new FileReader();
-		fileReader.onload = function() {
-			const dataUri = this.result;
-            const img = new Image();
-            img.onload = function() {
-                //resizeCanvas(this.width, this.height);
-                const fabricImg = new fabric.Image(img, {
-                    left: openpose_editor_canvas.width / 2,
-                    top: openpose_editor_canvas.height / 2,
-                    originX: 'center',
-                    originY: 'center',
-                    centeredScaling: true,
-                    cornerStyle: 'circle',
-                    cornerColor: 'white',
-                    borderColor: 'white',
-                    cornerSize: 10,
-                    transparentCorners: false,
-                    lockUniScaling: true,
-                    lockRotation: false
-                });
-                openpose_editor_canvas.add(fabricImg);
-                openpose_editor_canvas.setActiveObject(fabricImg);
-
-
-            };
-            img.src = dataUri;
-		};
-		fileReader.readAsDataURL(file);
+async function addBackground(file){
+    openpose_editor_canvas.setBackgroundImage(file.data, openpose_editor_canvas.renderAll.bind(openpose_editor_canvas), {
+        opacity: 0.5
     });
-    input.click();
-    return
+    const img = new Image();
+    await (img.src = file.data);
+    resizeCanvas(img.width, img.height)
+    return [img.width, img.height]
 }
+//function addBackground(){
+//    const input = document.createElement("input");
+//    input.type = "file"
+//    input.accept = "image/*"
+//    input.addEventListener("change", function(e){
+//        const canvas = openpose_editor_canvas
+//        const file = e.target.files[0];
+//		var fileReader = new FileReader();
+//		fileReader.onload = function() {
+//			const dataUri = this.result;
+//            const img = new Image();
+//            img.onload = function() {
+//                //resizeCanvas(this.width, this.height);
+//                const fabricImg = new fabric.Image(img, {
+//                    left: openpose_editor_canvas.width / 2,
+//                    top: openpose_editor_canvas.height / 2,
+//                    originX: 'center',
+//                    originY: 'center',
+//                    centeredScaling: true,
+//                    cornerStyle: 'circle',
+//                    cornerColor: 'white',
+//                    borderColor: 'white',
+//                    cornerSize: 10,
+//                    transparentCorners: false,
+//                    lockUniScaling: true,
+//                    lockRotation: false
+//                });
+//                openpose_editor_canvas.add(fabricImg);
+//                openpose_editor_canvas.setActiveObject(fabricImg);
+//
+//
+//            };
+//            img.src = dataUri;
+//		};
+//		fileReader.readAsDataURL(file);
+//    });
+//    input.click();
+//    return
+//}
 
 function detectImage(){
     gradioApp().querySelector("#openpose_editor_input").querySelector("input").click()
