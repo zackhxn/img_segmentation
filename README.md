@@ -1,6 +1,6 @@
 # img_segmentation
 为stable-diffusion-webui开发的深度图分割插件
-![image](https://github.com/zackhxn/img_segmentation/blob/main/images/QDBX0RKAT68R_40W%4049NAA.png)
+![image](https://github.com/zackhxn/img_segmentation/blob/main/images/LL(E67%7D06Q8)_FNV%40(%7D03M9.png)
 ## 功能
 -  「Add body」：添加一个新骨骼
 -  「edit img」：做图像分割
